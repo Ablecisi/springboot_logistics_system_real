@@ -31,11 +31,9 @@ public class LoginController {
     private EmpService empService;
 
     @PostMapping()
-    public Result login(String username, String password){
-        log.info("登录员工, 参数: username = {},password={}", username, password);
-        Emp emp = new Emp();
-        emp.setUsername(username);
-        emp.setPassword(password);
+    public Result login(@RequestBody Emp emp){
+        log.info("登录员工, 参数: username = {},password={}", emp.getUsername(), emp.getPassword());
+
         Emp user = empService.login(emp); // 登陆
 
         // 登陆成功,生成JWt令牌

@@ -114,12 +114,19 @@ public class EmpServiceImpl implements EmpService {
      */
     @Override
     public Emp login(Emp emp) {
-        emp.setPassword(MD5Utils.md5(emp.getPassword()));
+        /* emp.setPassword(MD5Utils.md5(emp.getPassword())); */
         return empMapper.getByUsernameAndPassword(emp);
     }
 
     @Override
     public Emp search(Emp emp) {
         return empMapper.search(emp);
+    }
+
+    @Override
+    public void insertEmpOk(Emp emp) {
+        emp.setCreateTime(LocalDateTime.now());
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.insertEmpOk(emp);
     }
 }

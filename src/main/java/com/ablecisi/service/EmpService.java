@@ -32,4 +32,6 @@ public interface EmpService {
     Emp login(Emp emp);
 
     Emp search(Emp emp);
+
+    void insertEmpOk(Emp emp);
 }

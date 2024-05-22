@@ -8,6 +8,11 @@
         values
         (#{ username}, #{name}, #{gender},#{image},#{job},#{entryDate},#{resignationDate},#{phone},#{status},#{address},#{roleId},#{deptId},#{createTime},#{updateTime})
     </insert>
+    <insert id="insertEmpOk">
+        insert into emp (username, name, gender, dept_id,entry_date, resignation_date, phone, status, address, create_time, update_time)
+        values
+        (#{username}, #{name}, #{gender}, #{deptId}, #{entryDate}, #{resignationDate}, #{phone}, #{status}, #{address}, #{createTime}, #{updateTime})
+    </insert>
     <!-- 更新 -->
     <update id="updateEmp">
         update emp
@@ -15,26 +20,29 @@
             <if test="username!=null and username!='' ">
                username=#{username},
             </if>
-            <if test="password!=null and password!='' ">
-                password=#{password},
-            </if>
             <if test="name!=null and name!='' ">
                 name=#{name},
             </if>
             <if test="gender!=null">
                 gender=#{gender},
             </if>
-            <if test="image!=null and image!='' ">
-                image=#{image},
+            <if test="deptId!=null and image!='' ">
+                dept_id=#{deptId},
             </if>
-            <if test="job!=null">
-                job=#{job},
+            <if test="entryDate!=null">
+                entry_date=#{entryDate},
             </if>
-            <if test="entrydate!=null">
-                entrydate=#{entrydate},
+            <if test="resignationDate!=null">
+                resignation_date=#{resignationDate},
             </if>
-            <if test="deptId!=null">
-                ,dept_id=#{deptId},
+            <if test="phone!=null">
+                ,phone=#{phone},
+            </if>
+            <if test="status!=null">
+                ,status=#{status},
+            </if>
+            <if test="address!=null">
+                ,address=#{address},
             </if>
             update_time=#{updateTime}
         </set>

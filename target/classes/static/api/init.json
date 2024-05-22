@@ -60,6 +60,12 @@
           "target": "_self"
         },
         {
+          "title": "用户管理2",
+          "href": "page/emp.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
           "title": "表单示例",
           "href": "",
           "icon": "fa fa-calendar",

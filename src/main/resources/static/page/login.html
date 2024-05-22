@@ -132,38 +132,42 @@
 
         // 进行登录操作
         form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username === '') {
+            var result = data.field;
+            console.log(result);
+            console.log(data);
+            if (result.username === '') {
                 layer.msg('用户名不能为空');
                 return false;
             }
-            if (data.password === '') {
+            if (result.password === '') {
                 layer.msg('密码不能为空');
                 return false;
             }
-            if (data.captcha === '') {
+            if (result.captcha === '') {
                 layer.msg('验证码不能为空');
                 return false;
             }
             // 前端post请求
-
-            $.post("/login",function (data){
+            /*$.post("/login", result, function (data) {
+                console.log(data);
                 if (data.code === 0) {
                     layer.msg('登录成功', function () {
-                        /*将用户名传给index.html*/
+                        /!*将用户名传给index.html*!/
                         var url = layer.url();
                         window.location.href = '/index.html?username=' + url.search.at(1);
                     });
                 } else {
                     layer.msg(data.msg);
                 }
-            },"json")
+            },"json")*/
 
 
             $.ajax({
                 url: '/login',
-                type: 'post',
-                data: data,
+                type: 'POST',
+                data: JSON.stringify(result),
+                contentType: 'application/json',
+                dataType: 'json',
                 success: function (data) {
                     if (data.code === 0) {
                         layer.msg('登录成功', function () {

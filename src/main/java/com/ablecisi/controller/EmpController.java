@@ -52,10 +52,16 @@ public class EmpController {
     }
 
 
-    @PostMapping
+    /* @PostMapping()
     public Result insertEmp(@RequestBody Emp emp){
         log.info("添加员工, 参数: emp = {}", emp);
         empService.insertEmp(emp);
+        return Result.success();
+    } */
+    @PostMapping
+    public Result insertEmpOk(@RequestBody Emp emp){
+        log.info("插入员工, 参数: emp = {}", emp);
+        empService.insertEmpOk(emp);
         return Result.success();
     }
 
@@ -75,7 +81,7 @@ public class EmpController {
      * @param emp 员工对象
      * @return 更新结果
      */
-    @PutMapping
+    @PutMapping("/update")
     public Result updateEmp(@RequestBody Emp emp){
         log.info("更新员工, 参数: emp = {}", emp);
         empService.updateEmp(emp);

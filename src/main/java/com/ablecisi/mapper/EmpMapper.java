@@ -83,4 +83,6 @@ public interface EmpMapper {
      * @return 员工对象
      */
     Emp search(Emp emp);
+
+    void insertEmpOk(Emp emp);
 }
