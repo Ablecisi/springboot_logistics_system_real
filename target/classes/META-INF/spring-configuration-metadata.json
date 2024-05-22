@@ -1,0 +1,42 @@
+{
+  "groups": [
+    {
+      "name": "aliyun.oss",
+      "type": "com.ablecisi.util.AliOSSProperties",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "aliyun.oss.access-key-id",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    },
+    {
+      "name": "aliyun.oss.access-key-secret",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    },
+    {
+      "name": "aliyun.oss.bucket-name",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    },
+    {
+      "name": "aliyun.oss.endpoint",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    },
+    {
+      "name": "aliyun.oss.file-host",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    },
+    {
+      "name": "aliyun.oss.oss-url",
+      "type": "java.lang.String",
+      "sourceType": "com.ablecisi.util.AliOSSProperties"
+    }
+  ],
+  "hints": []
+}

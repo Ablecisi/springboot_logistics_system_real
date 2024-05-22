@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ablecisi.mapper.EmpMapper">
+    <!-- 插入 -->
+    <insert id="insertEmp">
+        insert into emp(username, name, gender,image,job,entry_date,resignation_date,phone,status,address,role_id,dept_id,create_time,update_time)
+        values
+        (#{ username}, #{name}, #{gender},#{image},#{job},#{entryDate},#{resignationDate},#{phone},#{status},#{address},#{roleId},#{deptId},#{createTime},#{updateTime})
+    </insert>
+    <!-- 更新 -->
+    <update id="updateEmp">
+        update emp
+        <set>
+            <if test="username!=null and username!='' ">
+               username=#{username},
+            </if>
+            <if test="password!=null and password!='' ">
+                password=#{password},
+            </if>
+            <if test="name!=null and name!='' ">
+                name=#{name},
+            </if>
+            <if test="gender!=null">
+                gender=#{gender},
+            </if>
+            <if test="image!=null and image!='' ">
+                image=#{image},
+            </if>
+            <if test="job!=null">
+                job=#{job},
+            </if>
+            <if test="entrydate!=null">
+                entrydate=#{entrydate},
+            </if>
+            <if test="deptId!=null">
+                ,dept_id=#{deptId},
+            </if>
+            update_time=#{updateTime}
+        </set>
+        where id=#{id}
+    </update>
+    <!-- 根据ID删除 -->
+    <delete id="deleteByIds">
+        delete from emp where id in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!-- 根据部门ID删除 -->
+    <delete id="deleteByDeptId">
+        delete from emp where dept_id = #{deptId}
+    </delete>
+
+    <!-- 查询总数据数 -->
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from emp
+    </select>
+
+    <!-- 查询列表 -->
+    <select id="page" resultType="com.ablecisi.entity.Emp">
+        select * from emp
+        <where>
+            <if test="name!=null">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="gender!=null">
+                and gender = #{gender}
+            </if>
+            <if test="begin!=null and end!=null">
+                and entryDate between #{begin} and #{end}
+            </if>
+        </where>
+        limit #{start} , #{pageSize}
+    </select>
+
+    <!-- 查询所有数据(使用pageHelper) -->
+    <!-- 条件查询 -->
+    <select id="list" resultType="com.ablecisi.entity.Emp">
+
+        select * from emp
+        <where>
+            <if test=" name!=null and name!='' ">
+                name like concat('%',#{name},'%')
+            </if>
+            <if test="gender!=null">
+                and gender = #{gender}
+            </if>
+            <if test="begin!=null and end!=null">
+                and entryDate between #{begin} and #{end}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+    <!-- 根据ID查询 -->
+    <select id="selectById" resultType="com.ablecisi.entity.Emp">
+        select * from emp where id = #{id}
+    </select>
+    <select id="getByUsernameAndPassword" resultType="com.ablecisi.entity.Emp">
+        select * from emp where username = #{username} and password = #{password}
+    </select>
+    <select id="search" resultType="com.ablecisi.entity.Emp">
+        select * from emp
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name!=null and name!='' ">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="gender!=null">
+                and gender = #{gender}
+            </if>
+            <if test="image!=null and image!=''">
+                and image like concat('%',#{image},'%')
+            </if>
+            <if test="job!=null">
+                and job = #{job}
+            </if>
+            <if test="phone!=null">
+                and phone = #{phone}
+            </if>
+            <if test="status!=null and status!=''">
+                and status = #{status}
+            </if>
+        </where>
+        order by update_time desc
+    </select>
+</mapper>
