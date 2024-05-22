@@ -19,7 +19,7 @@ import java.util.List;
 public interface EmpService {
     PageBean page(Integer page, Integer pageSize, String name, Short gender, LocalDate begin, LocalDate end);
 
-    PageBean pageConvient(Integer page, Integer pageSize, String name, Short gender, LocalDate begin, LocalDate end);
+    PageBean pageConvient(Integer page, Integer pageSize);
 
     void deleteByIds(List<Integer> ids);
 
@@ -34,4 +34,6 @@ public interface EmpService {
     Emp search(Emp emp);
 
     void insertEmpOk(Emp emp);
+
+    List<Emp> all();
 }

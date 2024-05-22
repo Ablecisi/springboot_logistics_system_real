@@ -69,7 +69,7 @@
 
     </div>
 </div>
-<script src="lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script>
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
@@ -95,15 +95,17 @@
             }],
             cols: [[
                 {type: "checkbox", width: 50},
-                {field: 'id', width: 80, title: 'ID', sort: true},
-                {field: 'username', width: 80, title: '用户名'},
+                {field: 'userId', width: 100, title: 'ID', sort: true},
+                {field: 'username', width: 100, title: '用户名'},
+                {field: 'name', width: 100, title: '员工姓名'},
                 {field: 'gender', width: 80, title: '性别', sort: true},
-                {field: 'image',width: 80,title: '图像',sort: true},
-                {field: 'job', width: 80, title: '职业',sort: true},
-                {field: 'city', width: 80, title: '城市',sort: true},
-                {field: 'phone',width: 80,title: '电话',sort: true},
-                {field: 'status', width: 135, title: '状态', sort: true},
-                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                {field: 'deptId',width: 100,title: '部门',sort: true},
+                {field: 'entryDate', width: 160, title: '入职时间',sort: true},
+                {field: 'resignationDate', width: 160, title: '离职时间',sort: true},
+                {field: 'phone',width: 160,title: '手机号码',sort: true},
+                {field: 'status', width: 80, title: '状态', sort: true},
+                {field: 'address', width: 200, title: '家庭住址', sort: true},
+                {title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
             ]],
             limits: [10, 15, 20, 25, 50, 100],
             limit: 15,

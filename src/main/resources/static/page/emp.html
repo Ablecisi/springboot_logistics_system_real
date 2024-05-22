@@ -46,15 +46,8 @@
                             <label class="layui-form-label">部门</label>
                             <div class="layui-input-inline">
                                 <!--<input type="text" name="dept" autocomplete="off" class="layui-input">-->
-                                <!--从后端获取dept的值做成列表-->
-                                <select name="deptId" lay-verify="required">
-                                    <option value="">请选择部门</option>
-                                    <option value="1">技术部</option>
-                                    <option value="2">市场部</option>
-                                    <option value="3">财务部</option>
-                                    <option value="4">人事部</option>
-                                    <option value="5">行政部</option>
-                                </select>
+                                <!--从后端动态获取dept的值做成列表-->
+
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -119,7 +112,7 @@
                         <label class="layui-form-label">性别</label>
                         <div class="layui-input-block">
                             <input type="radio" name="gender" value="男" title="男" checked="">
-                            <input type="radio" name="gender" value="女" title="女">
+                            <input type="radio" name="gender" value="女" title="女" checked="">
                         </div>
                     </div>
                 </div>
@@ -178,28 +171,37 @@
 </div>
 <script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
 <script>
+    // layui方法,使用jQuery,定义模块,使用form和table模块
+
+    // layui方法开始=================================================
     layui.use(['form', 'table'], function () {
+        // 定义模块
         var $ = layui.jquery,
             form = layui.form,
             table = layui.table;
-
+        // 获取表格中员工信息
+        // 表格渲染开始==========================
         var inst = table.render ({
             elem: '#currentTableId',
-            url: '/emps',/*../api/table.json*/
+            url: '/emps/page',/*../api/table.json*/
+            // 解析后端返回的数据，返回形式为return中的形式
             parseData: function (res) {
-                return {
+                return{
                     "code": res.code,
                     "msg": res.msg,
-                    "count": res.count,
-                    "data": res.data
+                    "count": res.data.total,
+                    "data": res.data.rows
                 }
             },
+            // 表格上方添加和删除按钮
             toolbar: '#toolbarDemo',
+            // 表格左边各个小功能(filter:过滤器, exports:导出, print:打印, LAYTABLE_TIPS:提示)
             defaultToolbar: ['filter', 'exports', 'print', {
                 title: '提示',
                 layEvent: 'LAYTABLE_TIPS',
                 icon: 'layui-icon-tips'
             }],
+            // 定义表格的字段
             cols: [[
                 {type: "checkbox", width: 50},
                 {field: 'userId', width: 100, title: 'ID', sort: true},
@@ -215,27 +217,30 @@
                 {title: '操作', minWidth: 100, toolbar: '#currentTableBar', align: "center"}
             ]
             ],
+            // 定义表格内页面的条数可选择项
             limits: [10, 15, 20, 25, 50, 100],
+            // 定义表格内页面的条数
             limit: 15,
+            // 定义页面是否展示分页条
             page: true,
             skin: 'line'
         });
-
+        // 表格渲染结束==========================
 
         // 监听搜索操作
+        // 搜索操作开始==========================
         form.on('submit(data-search-btn)', function (data) {
+            //data-search-btn为lay-filter的值
+            // 获取搜索框的值,并且转换为json格式
             var result = JSON.stringify(data.field);
-            /*layer.alert(result, {
-                title: '最终的搜索信息'
-            });*/
-
-            fetch('../api/table.json', {/*/emps/search*/
-                method: 'POST',
-                headers: {
+            // 请求后端
+            fetch('/emps/search', {/*../api/table.json*/
+                method: 'POST', // 请求的方式
+                headers: { // 请求头
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(result)
-            }).then(response => {
+                body: JSON.stringify(result) // 请求的数据
+            }).then(response => { // then表示前一个操作成功后执行下一个操作
                 if (!response.ok) {
                     throw new Error('网络响应不正常');
                 }
@@ -243,9 +248,22 @@
             }).then(data => {
                 result = JSON.stringify(data);
                 console.log('Success:', result);
+                // 解析后端返回的数据，返回形式为return中的形式
+                return{
+                    "code": data.code,
+                    "msg": data.msg,
+                    "count": data.data.total,
+                    "data": data.data.rows
+                }
             }).catch((error) => {
                 result = JSON.stringify(error);
                 console.error('Error:', result);
+                return{
+                    "code": 0,
+                    "msg": "查询失败",
+                    "count": 0,
+                    "data": []
+                }
             });
 
             //执行搜索重载
@@ -260,6 +278,8 @@
 
             return false;
         });
+
+        // 监听添加和编辑里的保存操作
         form.on('submit(saveBtn)', function (data) {
             console.log(data);
             console.log(data.field);
@@ -267,6 +287,7 @@
             console.log(result.userId);
             if (result.userId !== undefined && result.userId !== "") {
                 console.log("update");
+                /*根据*/
                 // 请求后端
                 $.ajax({
                     url: '/emps/update',
@@ -283,6 +304,15 @@
                     }
                 });
             } else {
+                switch (result.gender) {
+                    case "男": {
+                        result.gender = 1;
+                        break
+                    }
+                    case "女": {
+                        result.gender = 2;
+                    }
+                }
                 $.ajax({
                     url: '/emps/insert',
                     type: 'POST',
@@ -375,6 +405,7 @@
             }
         });
     });
+    // layui方法结束=================================================
 </script>
 
 </body>

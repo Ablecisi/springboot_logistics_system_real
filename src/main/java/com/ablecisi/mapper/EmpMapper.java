@@ -85,4 +85,6 @@ public interface EmpMapper {
     Emp search(Emp emp);
 
     void insertEmpOk(Emp emp);
+
+    List<Emp> all();
 }

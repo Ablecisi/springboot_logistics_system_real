@@ -49,19 +49,15 @@ public class EmpServiceImpl implements EmpService {
      * @return 页面对象
      */
     @Override
-    public PageBean pageConvient(Integer page, Integer pageSize, String name, Short gender, LocalDate begin, LocalDate end) {
+    public PageBean pageConvient(Integer page, Integer pageSize) {
         // 使用PageHelper插件，设置分页
         PageHelper.startPage(page, pageSize);
 
         // 数据处理
-         if (begin == null) {
-            begin = LocalDate.now();
-        } else if(end == null) {
-            end = LocalDate.now();
-        }
 
         // 执行查询
-        List<Emp> emps = empMapper.list(name, gender, begin, end);
+        List<Emp> emps = empMapper.all();
+        System.out.println(emps);
         Page<Emp> pageInfo = (Page<Emp>) emps;
 
         // 返回分页数据
@@ -127,6 +123,12 @@ public class EmpServiceImpl implements EmpService {
     public void insertEmpOk(Emp emp) {
         emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
+        emp.setStatus("200");
         empMapper.insertEmpOk(emp);
+    }
+
+    @Override
+    public List<Emp> all() {
+        return empMapper.all();
     }
 }

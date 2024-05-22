@@ -37,7 +37,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         String jwt = request.getHeader("token");
         if(! StringUtils.hasLength(jwt)) {
             log.info("请求头中没有token");
-            Result error = Result.error(RCE.LOGIN_AUTH);
+            Result error = Result.error(RCE.LOGIN_AUTH.getMessage());
             // 手动转换为json---> 使用fastjson
             String notLogin = JSONObject.toJSON(error).toString();
             response.getWriter().write(notLogin);
@@ -50,7 +50,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             log.info("token解析失败");
-            Result error = Result.error(RCE.TOKEN_EXPIRED_ERROR);
+            Result error = Result.error(RCE.TOKEN_EXPIRED_ERROR.getMessage());
             // 手动转换为json---> 使用fastjson
             String notLogin = JSONObject.toJSON(error).toString();
             response.getWriter().write(notLogin);

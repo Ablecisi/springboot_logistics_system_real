@@ -100,7 +100,7 @@
 
     <div class="layui-body">
 
-        <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
+        <div class="layuimini-tab layui-tab-rollTool layui-tab"     lay-filter="layuiminiTab" lay-allowclose="true">
             <ul class="layui-tab-title">
                 <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
             </ul>
@@ -167,10 +167,13 @@
 
         // 获取从login.html传过来的username
         // 获取url中的参数
-        let username = window.location.href.split('?')[1];
-        let sourceContent = username.split('=')[1];
+        let url = window.location.href.split('?')[1]
+        let username = url.split('=')[0];
+        console.log(username);
+        let sourceContent = url.split('=')[1];
+        console.log(sourceContent);
         // 判断是否给的参数是username不是则默认为admin
-        if (sourceContent !== username) {
+        if (username !== "username") {
             sourceContent = 'admin';
         }
         // 设置到目标a标签

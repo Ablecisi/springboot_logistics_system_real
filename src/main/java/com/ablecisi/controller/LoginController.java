@@ -40,14 +40,14 @@ public class LoginController {
         if (user != null) {
             // 生成JWT令牌
             Map<String, Object> claims = new HashMap<>();
-            claims.put("id", user.getId());
+            claims.put("id", user.getUserId());
             claims.put("name", user.getName());
             claims.put("username", user.getUsername());
 
             String jwt = JwtUtils.generateJwt(claims); // 生成JWT令牌
-            return Result.success().data(jwt);
+            return Result.success(jwt);
         }
 
-        return Result.error(RCE.LOGIN_ERROR);
+        return Result.error(RCE.LOGIN_ERROR.getMessage());
     }
 }

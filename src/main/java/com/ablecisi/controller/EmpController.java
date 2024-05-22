@@ -33,15 +33,23 @@ public class EmpController {
      * 查询所有员工
      * @return 员工列表
      */
-    @GetMapping
+    @GetMapping("/page")
     public Result page(@RequestParam(defaultValue = "1" )Integer page,
-                       @RequestParam(defaultValue = "10")Integer pageSize,
-                       String name,  Short gender,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end){
-        log.info("查询员工, 参数: page = {}, pageSize = {},name = {},gender = {}, begin = {}, end = {}", page, pageSize, name, gender,begin, end);
-        return Result.success(empService.pageConvient(page, pageSize, name, gender, begin, end));
+                       @RequestParam(defaultValue = "10")Integer pageSize
+                       ){
+        log.info("查询员工, 参数: page = {}, pageSize = {}", page, pageSize);
+        return Result.success(empService.pageConvient(page, pageSize));
     }
+
+
+    /**
+     * 查询所有员工
+     */
+    /* @GetMapping("/all")
+    public Result all(){
+        log.info("查询所有员工");
+        return Result.success(empService.all());
+    } */
 
 
     @DeleteMapping("/{ids}")
@@ -58,7 +66,7 @@ public class EmpController {
         empService.insertEmp(emp);
         return Result.success();
     } */
-    @PostMapping
+    @PostMapping("/insert")
     public Result insertEmpOk(@RequestBody Emp emp){
         log.info("插入员工, 参数: emp = {}", emp);
         empService.insertEmpOk(emp);
@@ -91,7 +99,7 @@ public class EmpController {
     @PostMapping("/search")
     public Result search(@RequestBody Emp emp){
         log.info("搜索员工, 参数: emp = {}", emp);
-        return Result.success().data(empService.search(emp));
+        return Result.success(empService.search(emp));
     }
 
 

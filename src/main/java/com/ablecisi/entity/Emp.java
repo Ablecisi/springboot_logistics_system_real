@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -11,20 +12,20 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Emp {
 
-  private Integer id;
+  private Integer userId;
   private String username;
-  private String password;
   private String name;
   private Integer gender;
-  private String image;
-  private Integer job;
-  private LocalDateTime entryDate;
-  private LocalDateTime resignationDate;
+  private LocalDate entryDate;
+  private LocalDate resignationDate;
   private String phone;
   private String status;
   private String address;
   private Integer deptId;
   private Integer roleId;
+  private String password;
+  private String image;
+  private Integer job;
   private LocalDateTime createTime;
   private LocalDateTime updateTime;
 

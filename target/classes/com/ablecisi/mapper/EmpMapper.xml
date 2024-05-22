@@ -46,11 +46,11 @@
             </if>
             update_time=#{updateTime}
         </set>
-        where id=#{id}
+        where user_id =#{id}
     </update>
     <!-- 根据ID删除 -->
     <delete id="deleteByIds">
-        delete from emp where id in
+        delete from emp where user_id in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item}
         </foreach>
@@ -103,7 +103,7 @@
     </select>
     <!-- 根据ID查询 -->
     <select id="selectById" resultType="com.ablecisi.entity.Emp">
-        select * from emp where id = #{id}
+        select * from emp where user_id = #{id}
     </select>
     <select id="getByUsernameAndPassword" resultType="com.ablecisi.entity.Emp">
         select * from emp where username = #{username} and password = #{password}
@@ -111,8 +111,8 @@
     <select id="search" resultType="com.ablecisi.entity.Emp">
         select * from emp
         <where>
-            <if test="id != null">
-                and id = #{id}
+            <if test="userId != null">
+                and user_id = #{userId}
             </if>
             <if test="name!=null and name!='' ">
                 and username like concat('%',#{username},'%')
@@ -120,19 +120,60 @@
             <if test="gender!=null">
                 and gender = #{gender}
             </if>
-            <if test="image!=null and image!=''">
-                and image like concat('%',#{image},'%')
-            </if>
-            <if test="job!=null">
-                and job = #{job}
-            </if>
             <if test="phone!=null">
                 and phone = #{phone}
             </if>
             <if test="status!=null and status!=''">
                 and status = #{status}
             </if>
+            <if test="deptId!=null">
+                and dept_id = #{deptId}
+            </if>
         </where>
+        order by update_time desc
+    </select>
+    <select id="all" resultType="com.ablecisi.entity.Emp">
+        select
+            user_id,
+            username,
+            name,
+            gender,
+            dept_id,
+            entry_date,
+            resignation_date,
+            phone,
+            status,
+            address
+        from emp
+        <!--<where>
+            <if test="username!=null and username!='' ">
+                username=#{username}
+            </if>
+            <if test="name!=null and name!='' ">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="gender!=null">
+                and gender=#{gender}
+            </if>
+            <if test="deptId!=null and image!='' ">
+                and dept_id=#{deptId}
+            </if>
+            <if test="entryDate!=null">
+                and entry_date=#{entryDate}
+            </if>
+            <if test="resignationDate!=null">
+                and resignation_date=#{resignationDate}
+            </if>
+            <if test="phone!=null">
+                and phone=#{phone}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+            <if test="address!=null">
+                and address=#{address}
+            </if>
+        </where>-->
         order by update_time desc
     </select>
 </mapper>
